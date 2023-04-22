@@ -38,6 +38,15 @@ class LinkedScrollControllerGroup {
     return _attachedControllers.first.offset;
   }
 
+  /// Creates a new controller that is linked to any existing ones and set the init offset.
+  ScrollController addAndGetWithInitOffset(double offset) {
+    final controller =
+        _LinkedScrollController(this, initialScrollOffset: offset);
+    _allControllers.add(controller);
+    controller.addListener(_offsetNotifier.notifyListeners);
+    return controller;
+  }
+
   /// Creates a new controller that is linked to any existing ones.
   ScrollController addAndGet() {
     final initialScrollOffset = _attachedControllers.isEmpty
